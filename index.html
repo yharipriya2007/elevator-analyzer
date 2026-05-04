@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Elevator Analyzer</title>
+<style>
+body{
+    font-family: Arial;
+    background: linear-gradient(120deg, #1f4037, #99f2c8);
+}
+.container{
+    width:60%;
+    margin:40px auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+}
+button{
+    padding:10px;
+    width:100%;
+    background:#1f4037;
+    color:white;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Elevator Cable Tension & Motor Force Analyzer</h1>
+
+    <label>Mass of Elevator Cabin (kg)</label>
+    <input type="number" id="mass">
+
+    <label>Acceleration (m/s²)</label>
+    <input type="number" id="acceleration">
+
+    <label>Pulley Radius (m)</label>
+    <input type="number" id="radius">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div id="output" style="display:none;">
+        <p id="tension"></p>
+        <p id="force"></p>
+        <p id="torque"></p>
+    </div>
+</div>
+
+<script>
+function calculate(){
+    var m = parseFloat(document.getElementById("mass").value);
+    var a = parseFloat(document.getElementById("acceleration").value);
+    var r = parseFloat(document.getElementById("radius").value);
+
+    var g = 9.81;
+
+    var tension = m * (g + a);
+    var force = tension;
+    var torque = tension * r;
+
+    document.getElementById("output").style.display = "block";
+    document.getElementById("tension").innerHTML = "Cable Tension: " + tension.toFixed(2) + " N";
+    document.getElementById("force").innerHTML = "Motor Force: " + force.toFixed(2) + " N";
+    document.getElementById("torque").innerHTML = "Motor Torque: " + torque.toFixed(2) + " N·m";
+}
+</script>
+
+</body>
+</html>
