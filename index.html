@@ -1,211 +1,82 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>Elevator Pulley Analyzer</title>
-
-<style>
-
-body{
-    margin:0;
-    font-family:Arial;
-    background:#f4f7ff;
-}
-
-.header{
-    text-align:center;
-    background:#dfe8ff;
-    padding:20px;
-    border-bottom:3px solid #444;
-}
-
-.header h1{
-    margin:5px;
-    color:#1d3557;
-}
-
-.container{
-    display:flex;
-    padding:20px;
-    gap:20px;
-}
-
-.left{
-    width:50%;
-    background:white;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
-
-.right{
-    width:50%;
-    background:white;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
-
-h2{
-    color:#003566;
-    border-bottom:2px solid #999;
-    padding-bottom:5px;
-}
-
-input{
-    width:150px;
-    padding:8px;
-    margin:5px;
-    font-size:16px;
-}
-
-button{
-    padding:10px 20px;
-    background:#1d3557;
-    color:white;
-    border:none;
-    cursor:pointer;
-    border-radius:5px;
-    font-size:16px;
-}
-
-button:hover{
-    background:#457b9d;
-}
-
-.output{
-    background:#f1f1f1;
-    padding:15px;
-    margin-top:15px;
-    white-space:pre-line;
-    font-family:monospace;
-    border-radius:5px;
-    font-size:16px;
-}
-
-ul{
-    line-height:1.8;
-}
-
-</style>
+    <title>Elevator Analyzer</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f4f4;
+            padding:20px;
+        }
+        .container{
+            max-width:700px;
+            margin:auto;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+        }
+        input{
+            width:100%;
+            padding:10px;
+            margin:10px 0;
+        }
+        button{
+            width:100%;
+            padding:12px;
+            background:#0f5132;
+            color:white;
+            border:none;
+            cursor:pointer;
+            font-size:16px;
+        }
+        .result{
+            margin-top:20px;
+            padding:15px;
+            background:#e9f2ff;
+            border-radius:5px;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="header">
-    <h1>WORKING MODEL OF AN ELEVATOR USING PULLEY</h1>
-    <h2>Department of Mechanical Engineering</h2>
-    <h3>YOUR COLLEGE NAME</h3>
-</div>
-
 <div class="container">
+    <h2>Elevator Calculator</h2>
 
-<div class="left">
+    <label>Mass of Elevator (kg)</label>
+    <input type="number" id="mass" placeholder="Enter mass">
 
-<h2>Enter Input Values</h2>
+    <label>Acceleration (m/s²)</label>
+    <input type="number" id="acceleration" placeholder="Enter acceleration">
 
-<label>Load Mass (kg)</label><br>
-<input type="number" id="load" value="0.15"><br><br>
+    <label>Pulley Radius (m)</label>
+    <input type="number" id="radius" placeholder="Enter pulley radius">
 
-<label>Acceleration (m/s²)</label><br>
-<input type="number" id="acceleration" value="9.81"><br><br>
+    <button onclick="calculate()">Calculate Results</button>
 
-<button onclick="calculate()">Calculate</button>
-
-<div class="output" id="result"></div>
-
-</div>
-
-<div class="right">
-
-<h2>Objectives</h2>
-
-<ul>
-<li>To design a working model of an elevator using pulley mechanism.</li>
-
-<li>To calculate pulley tension and lifting force.</li>
-
-<li>To analyze motor torque required to lift the cabin.</li>
-
-<li>To determine cabin speed and travel time.</li>
-
-<li>To check safety factor of rope and motor suitability.</li>
-
-<li>To understand practical applications of Engineering Mechanics.</li>
-</ul>
-
-<h2>Model Specifications</h2>
-
-<ul>
-<li>Shaft Height = 60 cm</li>
-<li>Cabin Height = 10 cm</li>
-<li>Cabin Width = 8 cm</li>
-<li>Pulley Diameter = 5 cm</li>
-<li>Pulley Radius = 0.025 m</li>
-<li>Motor Speed = 100 rpm</li>
-<li>Motor Voltage = 6V</li>
-<li>Rope Type = Nylon Thread</li>
-<li>Maximum Rope Load = 49.05 N</li>
-</ul>
-
-</div>
-
+    <div class="result" id="result">
+        Results will appear here...
+    </div>
 </div>
 
 <script>
+function calculate() {
 
-function calculate(){
+    let m = parseFloat(document.getElementById("mass").value);
+    let a = parseFloat(document.getElementById("acceleration").value);
+    let r = parseFloat(document.getElementById("radius").value);
 
-    let m = parseFloat(document.getElementById("load").value);
+    let g = 9.81;
 
-    let g = parseFloat(document.getElementById("acceleration").value);
+    let tension = m * (g + a);
+    let motorForce = tension;
+    let torque = tension * r;
 
-    let r = 0.025;
-
-    let motorSpeed = 100;
-
-    let shaftHeight = 0.60;
-
-    let W = m * g;
-
-    let torque = W * r;
-
-    let circumference = 2 * 3.14 * r;
-
-    let speed = (circumference * motorSpeed)/60;
-
-    let time = shaftHeight / speed;
-
-    let power = W * speed;
-
-    let fos = 49.05 / W;
-
-    let output = `
-CALCULATION RESULTS
-
-Load Mass = ${m} kg
-
-Acceleration = ${g} m/s²
-
-Weight = ${W.toFixed(3)} N
-
-Torque Required = ${torque.toFixed(4)} N.m
-
-Pulley Circumference = ${circumference.toFixed(3)} m
-
-Cabin Speed = ${speed.toFixed(4)} m/s
-
-Travel Time = ${time.toFixed(2)} s
-
-Power Required = ${power.toFixed(3)} W
-
-Factor Of Safety = ${fos.toFixed(2)}
-
-Status = SAFE
-`;
-
-    document.getElementById("result").innerText = output;
+    document.getElementById("result").innerHTML =
+        "<b>Cable Tension:</b> " + tension.toFixed(2) + " N<br>" +
+        "<b>Motor Force:</b> " + motorForce.toFixed(2) + " N<br>" +
+        "<b>Motor Torque:</b> " + torque.toFixed(2) + " N·m";
 }
-
 </script>
 
 </body>
