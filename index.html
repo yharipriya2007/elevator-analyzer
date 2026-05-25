@@ -1,154 +1,198 @@
- 
-     <!DOCTYPE html>
+
+<!DOCTYPE html>
 <html>
 <head>
-<title>Elevator Cable Tension Analyzer</title>
+<title>Working Model of Elevator using Pulley</title>
 
 <style>
+
 body{
     margin:0;
-    font-family:monospace;
-    display:flex;
-    flex-direction:column;
-    background:white;
+    font-family:Arial;
+    background:#f4f7ff;
 }
 
 .header{
     text-align:center;
-    padding:15px;
-    background:#e8f0ff;
-    border-bottom:2px solid gray;
-}
-
-.main{
-    display:flex;
-    height:70vh;
-}
-
-.editor{
-    width:70%;
+    background:#dfe8ff;
     padding:20px;
-    font-size:20px;
-    overflow:auto;
+    border-bottom:3px solid #444;
 }
 
-.command{
-    width:30%;
-    background:#f5f5f5;
-    border-left:3px solid gray;
-    padding:15px;
-    overflow:auto;
+.header h1{
+    margin:5px;
+    color:#1d3557;
 }
 
-.green{ color:green; }
-.purple{ color:purple; }
+.container{
+    display:flex;
+    padding:20px;
+    gap:20px;
+}
 
-.objectives{
-    padding:15px;
-    background:#fafafa;
-    border-top:2px solid gray;
-    font-size:18px;
+.left{
+    width:50%;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.right{
+    width:50%;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h2{
+    color:#003566;
+    border-bottom:2px solid #999;
+    padding-bottom:5px;
 }
 
 input{
     width:120px;
     padding:8px;
-    font-size:18px;
-    margin-top:10px;
+    margin:5px;
+    font-size:16px;
 }
 
 button{
-    padding:8px 15px;
-    font-size:18px;
+    padding:10px 20px;
+    background:#1d3557;
+    color:white;
+    border:none;
     cursor:pointer;
-    margin-left:10px;
+    border-radius:5px;
+    font-size:16px;
 }
 
-pre{
-    white-space:pre-wrap;
+button:hover{
+    background:#457b9d;
 }
+
+.output{
+    background:#f1f1f1;
+    padding:15px;
+    margin-top:15px;
+    white-space:pre-line;
+    font-family:monospace;
+    border-radius:5px;
+}
+
+ul{
+    line-height:1.8;
+}
+
 </style>
 </head>
 
 <body>
 
 <div class="header">
-    <h1>ELEVATOR CABLE TENSION ANALYZER</h1>
+    <h1>WORKING MODEL OF AN ELEVATOR USING PULLEY</h1>
     <h2>Department of Mechanical Engineering</h2>
-    <h3>KLE TECHNOLOGICAL UNIVERSITY</h3>
+    <h3>YOUR COLLEGE NAME</h3>
 </div>
 
-<div class="main">
+<div class="container">
 
-<div class="editor">
-<pre>
-<span class="green">% Acceleration due to gravity (m/s^2)</span>
-g = 9.81;
+<div class="left">
 
-<span class="green">% Elevator and load masses (kg)</span>
-elevator_mass = 50;
+<h2>Enter Load Details</h2>
 
-<span class="green">% User Input Load</span>
-load = input_load;
+<label>Load Mass (kg)</label><br>
+<input type="number" id="load" value="0.15"><br><br>
 
-total_mass = elevator_mass + load;
-tension = total_mass * g;
+<button onclick="calculate()">Calculate</button>
 
-fprintf('Load = %d kg\n', load);
-fprintf('Total Mass = %d kg\n', total_mass);
-fprintf('Pulley Tension = %.2f N\n', tension);
-</pre>
-
-<h2>Enter Load (kg)</h2>
-
-<input type="number" id="loadInput" placeholder="Enter load">
-<button onclick="calculateTension()">Calculate</button>
+<div class="output" id="result"></div>
 
 </div>
 
-<div class="command">
-<h2>Command Window</h2>
-<pre id="output" class="purple"></pre>
-</div>
+<div class="right">
 
-</div>
-
-<div class="objectives">
 <h2>Objectives</h2>
 
 <ul>
-<li>To analyze elevator cable tension for different loads.</li>
-<li>To calculate total mass acting on the pulley system.</li>
-<li>To understand the effect of load variation on pulley tension.</li>
-<li>To simulate elevator mechanics using programming.</li>
-<li>To develop a MATLAB-style engineering analyzer webpage.</li>
+<li>To design a working model of an elevator using pulley mechanism.</li>
+
+<li>To calculate pulley tension and lifting force.</li>
+
+<li>To analyze motor torque required to lift the cabin.</li>
+
+<li>To determine cabin speed and travel time.</li>
+
+<li>To check safety factor of rope and motor suitability.</li>
+
+<li>To understand practical applications of Engineering Mechanics.</li>
 </ul>
+
+<h2>Model Specifications</h2>
+
+<ul>
+<li>Shaft Height = 60 cm</li>
+<li>Cabin Height = 10 cm</li>
+<li>Cabin Width = 8 cm</li>
+<li>Pulley Diameter = 5 cm</li>
+<li>Motor Speed = 100 rpm</li>
+<li>Motor Voltage = 6V</li>
+<li>Rope Type = Nylon Thread</li>
+</ul>
+
+</div>
 
 </div>
 
 <script>
 
-function calculateTension(){
+function calculate(){
 
-    const g = 9.81;
-    const elevator_mass = 50;
+    let m = parseFloat(document.getElementById("load").value);
 
-    let load = Number(document.getElementById("loadInput").value);
+    let g = 9.81;
+    let r = 0.025;
+    let motorSpeed = 100;
+    let shaftHeight = 0.60;
 
-    let total_mass = elevator_mass + load;
-    let tension = total_mass * g;
+    let W = m * g;
 
-    let result = "";
-    result += `Load = ${load} kg\n`;
-    result += `Total Mass = ${total_mass} kg\n`;
-    result += `Pulley Tension = ${tension.toFixed(2)} N\n`;
+    let torque = W * r;
 
-    document.getElementById("output").innerText = result;
+    let circumference = 2 * 3.14 * r;
+
+    let speed = (circumference * motorSpeed)/60;
+
+    let time = shaftHeight / speed;
+
+    let power = W * speed;
+
+    let fos = 49.05 / W;
+
+    let output = `
+WEIGHT = ${W.toFixed(3)} N
+
+TORQUE REQUIRED = ${torque.toFixed(4)} N.m
+
+PULLEY CIRCUMFERENCE = ${circumference.toFixed(3)} m
+
+CABIN SPEED = ${speed.toFixed(4)} m/s
+
+TRAVEL TIME = ${time.toFixed(2)} s
+
+POWER REQUIRED = ${power.toFixed(3)} W
+
+FACTOR OF SAFETY = ${fos.toFixed(2)}
+
+STATUS = SAFE
+`;
+
+    document.getElementById("result").innerText = output;
 }
 
 </script>
 
 </body>
-</html>   
-
-  
+</html>
