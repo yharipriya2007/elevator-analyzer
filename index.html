@@ -1,8 +1,7 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-<title>Working Model of Elevator using Pulley</title>
+<title>Elevator Pulley Analyzer</title>
 
 <style>
 
@@ -53,7 +52,7 @@ h2{
 }
 
 input{
-    width:120px;
+    width:150px;
     padding:8px;
     margin:5px;
     font-size:16px;
@@ -80,6 +79,7 @@ button:hover{
     white-space:pre-line;
     font-family:monospace;
     border-radius:5px;
+    font-size:16px;
 }
 
 ul{
@@ -94,17 +94,20 @@ ul{
 <div class="header">
     <h1>WORKING MODEL OF AN ELEVATOR USING PULLEY</h1>
     <h2>Department of Mechanical Engineering</h2>
-    <h3>KLE TECHNOLOGICAL UNIVERSITY</h3>
+    <h3>YOUR COLLEGE NAME</h3>
 </div>
 
 <div class="container">
 
 <div class="left">
 
-<h2>Enter Load Details</h2>
+<h2>Enter Input Values</h2>
 
 <label>Load Mass (kg)</label><br>
 <input type="number" id="load" value="0.15"><br><br>
+
+<label>Acceleration (m/s²)</label><br>
+<input type="number" id="acceleration" value="9.81"><br><br>
 
 <button onclick="calculate()">Calculate</button>
 
@@ -137,9 +140,11 @@ ul{
 <li>Cabin Height = 10 cm</li>
 <li>Cabin Width = 8 cm</li>
 <li>Pulley Diameter = 5 cm</li>
+<li>Pulley Radius = 0.025 m</li>
 <li>Motor Speed = 100 rpm</li>
 <li>Motor Voltage = 6V</li>
 <li>Rope Type = Nylon Thread</li>
+<li>Maximum Rope Load = 49.05 N</li>
 </ul>
 
 </div>
@@ -152,9 +157,12 @@ function calculate(){
 
     let m = parseFloat(document.getElementById("load").value);
 
-    let g = 9.81;
+    let g = parseFloat(document.getElementById("acceleration").value);
+
     let r = 0.025;
+
     let motorSpeed = 100;
+
     let shaftHeight = 0.60;
 
     let W = m * g;
@@ -172,21 +180,27 @@ function calculate(){
     let fos = 49.05 / W;
 
     let output = `
-WEIGHT = ${W.toFixed(3)} N
+CALCULATION RESULTS
 
-TORQUE REQUIRED = ${torque.toFixed(4)} N.m
+Load Mass = ${m} kg
 
-PULLEY CIRCUMFERENCE = ${circumference.toFixed(3)} m
+Acceleration = ${g} m/s²
 
-CABIN SPEED = ${speed.toFixed(4)} m/s
+Weight = ${W.toFixed(3)} N
 
-TRAVEL TIME = ${time.toFixed(2)} s
+Torque Required = ${torque.toFixed(4)} N.m
 
-POWER REQUIRED = ${power.toFixed(3)} W
+Pulley Circumference = ${circumference.toFixed(3)} m
 
-FACTOR OF SAFETY = ${fos.toFixed(2)}
+Cabin Speed = ${speed.toFixed(4)} m/s
 
-STATUS = SAFE
+Travel Time = ${time.toFixed(2)} s
+
+Power Required = ${power.toFixed(3)} W
+
+Factor Of Safety = ${fos.toFixed(2)}
+
+Status = SAFE
 `;
 
     document.getElementById("result").innerText = output;
