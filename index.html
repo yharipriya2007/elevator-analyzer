@@ -1,294 +1,134 @@
-<!DOCTYPE html>
-<html lang="en">
+ 
+      <!DOCTYPE html>
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elevator Analytical Model</title>
+<title>Elevator Cable Tension Analyzer</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
 body{
-    font-family: Arial, Helvetica, sans-serif;
-    background:#eef2f5;
-    color:#222;
-    line-height:1.6;
-}
-
-header{
-    background:linear-gradient(135deg,#1f4037,#3c7a68);
-    color:white;
-    text-align:center;
-    padding:40px 20px;
-    box-shadow:0 4px 10px rgba(0,0,0,0.2);
-}
-
-header h1{
-    font-size:38px;
-    margin-bottom:10px;
-}
-
-header p{
-    font-size:18px;
-    opacity:0.9;
-}
-
-.container{
-    width:90%;
-    max-width:1100px;
-    margin:auto;
-    padding:30px 0;
-}
-
-.card{
+    margin:0;
+    font-family:monospace;
+    display:flex;
+    flex-direction:column;
     background:white;
-    border-radius:12px;
-    padding:30px;
-    margin-bottom:25px;
-    box-shadow:0 5px 18px rgba(0,0,0,0.08);
 }
 
-h2{
-    color:#1f4037;
-    margin-bottom:18px;
-    border-left:6px solid #3c7a68;
-    padding-left:12px;
+.header{
+    text-align:center;
+    padding:15px;
+    background:#e8f0ff;
+    border-bottom:2px solid gray;
 }
 
-ul{
-    margin-left:20px;
+.main{
+    display:flex;
+    height:80vh;
 }
 
-.formula{
-    background:#f4f8f7;
-    padding:18px;
-    border-radius:10px;
-    margin-top:12px;
-    font-size:18px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:25px;
-}
-
-.input-box label{
-    font-weight:bold;
-    color:#333;
-}
-
-input{
-    width:100%;
-    padding:12px;
-    margin-top:8px;
-    margin-bottom:18px;
-    border:1px solid #bbb;
-    border-radius:8px;
-    font-size:16px;
-}
-
-button{
-    width:100%;
-    padding:14px;
-    border:none;
-    background:#1f4037;
-    color:white;
-    border-radius:8px;
-    font-size:18px;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-button:hover{
-    background:#2e6658;
-}
-
-.result{
-    margin-top:25px;
-    background:#e8f3ff;
+.editor{
+    width:70%;
     padding:20px;
-    border-radius:10px;
-    border-left:6px solid #1d5fa7;
+    font-size:20px;
+    overflow:auto;
+}
+
+.command{
+    width:30%;
+    background:#f5f5f5;
+    border-left:3px solid gray;
+    padding:15px;
+    overflow:auto;
+}
+
+.green{ color:green; }
+.purple{ color:purple; }
+
+.objectives{
+    padding:15px;
+    background:#fafafa;
+    border-top:2px solid gray;
     font-size:18px;
-    font-weight:bold;
 }
 
-.highlight{
-    color:#1d5fa7;
-}
-
-.phase-title{
-    color:#1565c0;
-    margin-top:15px;
-    margin-bottom:15px;
-}
-
-.diagram{
-    width:100%;
-    margin-top:20px;
-    text-align:center;
-}
-
-.diagram img{
-    width:100%;
-    max-width:500px;
-    border-radius:10px;
-}
-
-footer{
-    text-align:center;
-    background:#1f4037;
-    color:white;
-    padding:18px;
-    margin-top:30px;
-}
-
-@media(max-width:768px){
-    .grid{
-        grid-template-columns:1fr;
-    }
-
-    header h1{
-        font-size:28px;
-    }
+pre{
+    white-space:pre-wrap;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <h1>Elevator Cable Tension & Motor Force Analyzer</h1>
-    <p>KLE Technological University | Mechanical System Modeling</p>
-</header>
+<div class="header">
+    <h1>ELEVATOR CABLE TENSION ANALYZER</h1>
+    <h2>Department of Mechanical Engineering</h2>
+    <h3>YOUR COLLEGE NAME</h3>
+</div>
 
-<div class="container">
+<div class="main">
 
-    <section class="card">
-        <h2>Problem Description</h2>
+<div class="editor">
+<pre>
+<span class="green">% Acceleration due to gravity (m/s^2)</span>
+g = 9.81;
 
-        <ul>
-            <li>Elevator cabin connected using a pulley and cable system.</li>
-            <li>Mass of elevator is considered as the main load.</li>
-            <li>Pulley assumed smooth and massless.</li>
-            <li>Motor provides torque to lift the elevator.</li>
-            <li>String/cable assumed inextensible.</li>
-        </ul>
+<span class="green">% Elevator and load masses (kg)</span>
+elevator_mass = 50;
+loads = 10:10:100;
 
-        <h3 class="phase-title">Objectives</h3>
+for load = loads
+    total_mass = elevator_mass + load;
+    tension = total_mass * g;
 
-        <ul>
-            <li>Determine cable tension.</li>
-            <li>Calculate motor force and torque.</li>
-            <li>Analyze elevator motion using Newton’s Second Law.</li>
-            <li>Study effect of acceleration on lifting force.</li>
-        </ul>
-    </section>
+    fprintf('Load = %d kg\n', load);
+    fprintf('Total Mass = %d kg\n', total_mass);
+    fprintf('Pulley Tension = %.2f N\n', tension);
+    fprintf('----------------------\n');
+end
+</pre>
+</div>
 
-    <section class="card">
-        <h2>Phase 1: Mechanical Idealization & Analytical Modelling</h2>
-
-        <div class="grid">
-
-            <div>
-                <h3>Mechanical Idealization</h3>
-                <ul>
-                    <li>Single elevator cabin</li>
-                    <li>Massless pulley</li>
-                    <li>Uniform cable tension</li>
-                    <li>Vertical lifting system</li>
-                    <li>Neglect air resistance</li>
-                </ul>
-            </div>
-
-            <div>
-                <h3>Analytical Formulation</h3>
-                <ul>
-                    <li>Step 1: Define elevator mass</li>
-                    <li>Step 2: Apply Newton’s Second Law</li>
-                    <li>Step 3: Compute cable tension</li>
-                    <li>Step 4: Determine motor torque</li>
-                    <li>Step 5: Validate equilibrium condition</li>
-                </ul>
-            </div>
-
-        </div>
-
-        <div class="formula">
-            <p><b>Tension:</b> T = m(g + a)</p>
-            <p><b>Motor Force:</b> F = T</p>
-            <p><b>Motor Torque:</b> τ = T × r</p>
-        </div>
-    </section>
-
-    <section class="card">
-        <h2>Phase 2: Elevator Calculator</h2>
-
-        <div class="input-box">
-            <label>Mass of Elevator (kg)</label>
-            <input type="number" id="mass" placeholder="Enter mass">
-
-            <label>Acceleration (m/s²)</label>
-            <input type="number" id="acc" placeholder="Enter acceleration">
-
-            <label>Pulley Radius (m)</label>
-            <input type="number" id="radius" placeholder="Enter pulley radius">
-
-            <button onclick="calculate()">Calculate Results</button>
-        </div>
-
-        <div class="result" id="output">
-            Results will appear here...
-        </div>
-    </section>
+<div class="command">
+<h2>Command Window</h2>
+<pre id="output" class="purple"></pre>
+</div>
 
 </div>
 
-<footer>
-    © 2026 Elevator Analytical Engineering Project | KLE Technological University
-</footer>
+<div class="objectives">
+<h2>Objectives</h2>
+
+<ul>
+<li>To analyze elevator cable tension for different loads.</li>
+<li>To calculate total mass acting on the pulley system.</li>
+<li>To understand the effect of load variation on pulley tension.</li>
+<li>To simulate elevator mechanics using programming.</li>
+<li>To develop a MATLAB-style engineering analyzer webpage.</li>
+</ul>
+
+</div>
 
 <script>
-function calculate(){
+const g = 9.81;
+const elevator_mass = 50;
 
-    let m = parseFloat(document.getElementById('mass').value);
-    let a = parseFloat(document.getElementById('acc').value);
-    let r = parseFloat(document.getElementById('radius').value);
+let result = "";
 
-    let g = 9.81;
+for(let load=10; load<=100; load+=10){
 
-    if(isNaN(m) || isNaN(a) || isNaN(r)){
-        document.getElementById('output').innerHTML = 'Please enter all values correctly.';
-        return;
-    }
+    let total_mass = elevator_mass + load;
+    let tension = total_mass * g;
 
-    let T = m * (g + a);
-    let torque = T * r;
-    let power = T * a;
-
-    document.getElementById('output').innerHTML =
-    '<span class="highlight">Cable Tension:</span> ' + T.toFixed(2) + ' N <br><br>' +
-    '<span class="highlight">Motor Torque:</span> ' + torque.toFixed(2) + ' N·m <br><br>' +
-    '<span class="highlight">Motor Force:</span> ' + T.toFixed(2) + ' N <br><br>' +
-    '<span class="highlight">Estimated Power:</span> ' + power.toFixed(2) + ' W';
+    result += `Load = ${load} kg\n`;
+    result += `Total Mass = ${total_mass} kg\n`;
+    result += `Pulley Tension = ${tension.toFixed(2)} N\n`;
+    result += `----------------------\n`;
 }
+
+document.getElementById("output").innerText = result;
 </script>
 
 </body>
 </html>
-
-
- 
-
-
-
-
-    
       
           
 
