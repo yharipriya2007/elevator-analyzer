@@ -1,81 +1,112 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Elevator Analyzer</title>
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-            background:#f4f4f4;
-            padding:20px;
-        }
-        .container{
-            max-width:700px;
-            margin:auto;
-            background:white;
-            padding:20px;
-            border-radius:10px;
-        }
-        input{
-            width:100%;
-            padding:10px;
-            margin:10px 0;
-        }
-        button{
-            width:100%;
-            padding:12px;
-            background:#0f5132;
-            color:white;
-            border:none;
-            cursor:pointer;
-            font-size:16px;
-        }
-        .result{
-            margin-top:20px;
-            padding:15px;
-            background:#e9f2ff;
-            border-radius:5px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elevator Analytical Model</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f4f6f8;
+}
+header{
+    background:#1f4037;
+    color:white;
+    padding:25px;
+    text-align:center;
+}
+section{
+    max-width:900px;
+    margin:30px auto;
+    background:white;
+    padding:25px;
+    border-radius:8px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+h2{
+    color:#1f4037;
+}
+input, button{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+}
+button{
+    background:#1f4037;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+.result{
+    background:#eef;
+    padding:10px;
+    margin-top:10px;
+    font-weight:bold;
+}
+footer{
+    text-align:center;
+    padding:15px;
+    font-size:13px;
+    color:#555;
+}
+</style>
 </head>
+
 <body>
 
-<div class="container">
-    <h2>Elevator Calculator</h2>
+<header>
+    <h1>Elevator Cable Tension & Motor Force Analyzer</h1>
+    <p>Developed by: YOUR NAME | YOUR COLLEGE</p>
+</header>
+
+<section>
+    <h2>1️⃣ Problem Description</h2>
+    <p>This project analyzes the forces acting on an elevator cabin using a pulley system. 
+    Using Free Body Diagram and Newton’s Second Law, the cable tension and motor torque are calculated.</p>
+</section>
+
+<section>
+    <h2>2️⃣ Mathematical Model</h2>
+    <p><b>Tension (T) = m (g + a)</b></p>
+    <p><b>Motor Force (F) = T</b></p>
+    <p><b>Motor Torque (τ) = T × r</b></p>
+</section>
+
+<section>
+    <h2>3️⃣ Elevator Calculator</h2>
 
     <label>Mass of Elevator (kg)</label>
-    <input type="number" id="mass" placeholder="Enter mass">
+    <input type="number" id="mass">
 
     <label>Acceleration (m/s²)</label>
-    <input type="number" id="acceleration" placeholder="Enter acceleration">
+    <input type="number" id="acc">
 
     <label>Pulley Radius (m)</label>
-    <input type="number" id="radius" placeholder="Enter pulley radius">
+    <input type="number" id="radius">
 
-    <button onclick="calculate()">Calculate Results</button>
+    <button onclick="calculate()">Calculate</button>
 
-    <div class="result" id="result">
-        Results will appear here...
-    </div>
-</div>
+    <div class="result" id="output"></div>
+</section>
+
+<footer>
+    © 2026 Elevator Analytical Engineering Project
+</footer>
 
 <script>
-function calculate() {
-
+function calculate(){
     let m = parseFloat(document.getElementById("mass").value);
-    let a = parseFloat(document.getElementById("acceleration").value);
+    let a = parseFloat(document.getElementById("acc").value);
     let r = parseFloat(document.getElementById("radius").value);
-
     let g = 9.81;
 
-    let tension = m * (g + a);
-    let motorForce = tension;
-    let torque = tension * r;
+    let T = m*(g+a);
+    let torque = T*r;
 
-    document.getElementById("result").innerHTML =
-        "<b>Cable Tension:</b> " + tension.toFixed(2) + " N<br>" +
-        "<b>Motor Force:</b> " + motorForce.toFixed(2) + " N<br>" +
-        "<b>Motor Torque:</b> " + torque.toFixed(2) + " N·m";
+    document.getElementById("output").innerHTML =
+        "Cable Tension: " + T.toFixed(2) + " N <br> Motor Torque: " + torque.toFixed(2) + " N·m";
 }
 </script>
 
